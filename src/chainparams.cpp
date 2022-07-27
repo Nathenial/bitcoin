@@ -216,7 +216,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nTimeout = 1628640000; // August 11th, 2021
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].min_activation_height = 0; // No activation delay
 
-        // yzs_2022_07_23
+        /* yzs_2022_07_23 */
         // consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000064728c7be6fe4b2f961");
         consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000000000001"); //modified
         consensus.defaultAssumeValid = uint256S("0x00000000000163cfb1f97c4e4098a3692c8053ad9cab5ad9c86b338b5c00b8b7"); // 2143398
@@ -231,8 +231,10 @@ public:
         m_assumed_chain_state_size = 2;
         /* yzs_2022_07_27 */
         // genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
-        genesis = CreateGenesisBlock(1296688602, 0, 0x1d30783d, 1, 50 * COIN); //大约每60秒产生一个区块的nbits
-        // 计算对应上述nbits符合条件的nNonce、hash、Merklehash
+        
+        genesis = CreateGenesisBlock(1296688602, 20859147, 0x1d30783d, 1, 50 * COIN); // using this nbits to create block every 60s
+        
+        /*  // 计算对应上述nbits符合条件的nNonce、hash、Merklehash
         consensus.hashGenesisBlock = uint256S("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         if (true && (genesis.GetHash() != consensus.hashGenesisBlock)) {
             std::cout << std::string("Begin calculating Mainnet Genesis Block:\n");
@@ -256,9 +258,11 @@ public:
             std::cout << "   merklehash: "  << genesis.hashMerkleRoot.ToString().c_str() << "\n";
             std::cout << std::string("Finished calculating Mainnet Genesis Block:\n");
         } // modified
-        
+        */
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+        // assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+        // assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000028cc8b030b50ec53fbea1da9f4d4e479a6d702d8f2103e67ec68f8def7"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear();
