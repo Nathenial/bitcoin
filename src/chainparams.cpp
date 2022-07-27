@@ -226,8 +226,34 @@ public:
         nPruneAfterHeight = 1000;
         m_assumed_blockchain_size = 40;
         m_assumed_chain_state_size = 2;
-
-        genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
+        /* yzs_2022_07_27 */
+        // genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1296688602, 0, 0x1d30783d, 1, 50 * COIN); //大约每60秒产生一个区块的nbits
+        // 计算对应上述nbits符合条件的nNonce、hash、Merklehash
+        consensus.hashGenesisBlock = uint256S("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        if (true && (genesis.GetHash() != consensus.hashGenesisBlock)) {
+            std::cout << std::string("Begin calculating Mainnet Genesis Block:\n");
+            arith_uint256 hashTarget = arith_uint256().SetCompact(genesis.nBits);
+            uint256 hash;
+            genesis.nNonce = 0;
+            while (UintToArith256(genesis.GetHash()) > hashTarget) {
+                ++genesis.nNonce;
+                if (genesis.nNonce == 0) {
+                    std::cout << std::string("NONCE WRAPPED, incrementing time:\n");
+                    ++genesis.nTime;
+                }
+                if (genesis.nNonce % 1000 == 0) {
+                    std::cout << strNetworkID << " nonce: " << genesis.nNonce << " time: " << genesis.nTime << " hash: " << genesis.GetHash().ToString().c_str() << "\n";
+                }
+            }
+            std::cout << "Mainnet ---\n";
+            std::cout << "  nonce: " << genesis.nNonce <<  "\n";
+            std::cout << "   time: " << genesis.nTime << "\n";
+            std::cout << "   hash: " << genesis.GetHash().ToString().c_str() << "\n";
+            std::cout << "   merklehash: "  << genesis.hashMerkleRoot.ToString().c_str() << "\n";
+            std::cout << std::string("Finished calculating Mainnet Genesis Block:\n");
+        } // modified
+        
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
