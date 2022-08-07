@@ -444,6 +444,8 @@ bool CNetAddr::IsLocal() const
  */
 bool CNetAddr::IsValid() const
 {
+    /* yzs_2022_08_07 */
+    /*
     // unspecified IPv6 address (::/128)
     unsigned char ipNone6[16] = {};
     if (IsIPv6() && memcmp(m_addr.data(), ipNone6, sizeof(ipNone6)) == 0) {
@@ -468,7 +470,7 @@ bool CNetAddr::IsValid() const
             return false;
         }
     }
-
+    */
     return true;
 }
 
@@ -483,7 +485,9 @@ bool CNetAddr::IsValid() const
  */
 bool CNetAddr::IsRoutable() const
 {
-    return IsValid() && !(IsRFC1918() || IsRFC2544() || IsRFC3927() || IsRFC4862() || IsRFC6598() || IsRFC5737() || IsRFC4193() || IsRFC4843() || IsRFC7343() || IsLocal() || IsInternal());
+    /* yzs_2022_08_07 */
+    //return IsValid() && !(IsRFC1918() || IsRFC2544() || IsRFC3927() || IsRFC4862() || IsRFC6598() || IsRFC5737() || IsRFC4193() || IsRFC4843() || IsRFC7343() || IsLocal() || IsInternal());
+    return true;
 }
 
 /**
