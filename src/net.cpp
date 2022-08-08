@@ -286,7 +286,19 @@ CService MaybeFlipIPv6toCJDNS(const CService& service)
 bool AddLocal(const CService& addr_, int nScore)
 {
     CService addr{MaybeFlipIPv6toCJDNS(addr_)};
-
+    /* yzs_2022_08_08 */
+    if(addr.ToString()=="0.0.0.0:18333")    //new
+        return false;
+    
+    if(addr.ToString()=="0.0.0.0:0")        //new
+        return false;
+    
+    if(addr.ToString()=="[::]:18333")       //new
+        return false;
+    
+    if(addr.ToString()=="[::]:0")           //new
+        return false;
+    
     if (!addr.IsRoutable())
         return false;
 
