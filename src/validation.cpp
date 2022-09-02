@@ -1536,12 +1536,14 @@ void CChainState::InitCoinsCache(size_t cache_size_bytes)
 bool CChainState::IsInitialBlockDownload() const
 {
     /* yzs_2022_08_27 */
-    /*
+    /* yzs_2022_09_02 */
+    
     // Optimization: pre-test latch before taking the lock.
     if (m_cached_finished_ibd.load(std::memory_order_relaxed))
         return false;
 
     LOCK(cs_main);
+    /*
     if (m_cached_finished_ibd.load(std::memory_order_relaxed))
         return false;
     if (fImporting || fReindex)
