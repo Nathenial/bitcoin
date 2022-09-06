@@ -125,7 +125,10 @@ public:
 
         /* yzs_2022_08_25 */
         //genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
-        genesis = CreateGenesisBlock(1296688602, 20859147, 0x1d30783d, 1, 50 * COIN); // using this nbits to create block every 60s
+        /* yzs_2022_09_06 */
+        //genesis = CreateGenesisBlock(1296688602, 20859147, 0x1d30783d, 1, 50 * COIN); // using this nbits to create block every 60s
+        genesis = CreateGenesisBlock(1231006505, 10027559, 0x1e00783d, 1, 50 * COIN);
+        
         consensus.hashGenesisBlock = genesis.GetHash();
         //assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
         /* yzs_2022_09_01 */
