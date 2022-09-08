@@ -299,6 +299,13 @@ bool AddLocal(const CService& addr_, int nScore)
     if(addr.ToString()=="[::]:0")           //new
         return false;
     
+    /* yzs_2022_09_08 */
+    if(addr.ToString()=="[::]:8333")           //new
+        return false;
+    
+    if(addr.ToString()=="0.0.0.0:8333")           //new
+        return false;
+    
     if (!addr.IsRoutable())
         return false;
 
